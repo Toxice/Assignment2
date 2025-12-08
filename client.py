@@ -56,7 +56,7 @@ def interactive_mode(host: str, port: int):
 
                 choice = input("Enter choice (calc/gpt/quit): ").strip()
 
-                if choice == "quit" or choice.lower() in "exit":
+                if choice == "quit":
                     print("Closing connection...")
                     break
 
