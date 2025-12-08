@@ -28,7 +28,7 @@ def send_request(sock: socket.socket, payload: dict) -> dict:
             return json.loads(line.decode("utf-8"))
 
 
-PRE_MADE_EXPR = {"2 plus 2": "2+2"}
+PRE_MADE_EXPR = {"1": "2+2", "2": "5+7"}
 
 
 def interactive_mode(host: str, port: int):
@@ -89,7 +89,7 @@ def interactive_mode(host: str, port: int):
                     else:
                         raise ValueError("illegal constant type")
 
-                elif choice == "2":
+                elif choice == "gpt":
                     prompt = input("Enter GPT prompt: ").strip()
                     if not prompt:
                         print("Empty prompt, skipping...")
