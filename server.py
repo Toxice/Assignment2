@@ -7,6 +7,7 @@ Enabling real GPT calls (optional):
 '''
 import argparse, socket, json, time, threading, math, os, ast, operator, collections
 from typing import Any, Dict
+from openai import OpenAI
 
 
 # ---------------- LRU Cache (simple) ----------------
@@ -74,13 +75,23 @@ def safe_eval_expr(expr: str) -> float:
 
 
 # ---------------- GPT Call (stub by default) ----------------
-def call_gpt(prompt: str) -> str:
+def call_gpt_phony(prompt: str) -> str:
     """
     Stub for GPT call – returns a placeholder string.
     Replace this with a real OpenAI call if desired.
     """
     return f"[GPT-STUB] Received a prompt of length {len(prompt)} chars."
 
+def call_gpt(prompt: str) -> str:
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    gpt_model = os.getenv("GPT_MODEL")
+
+    response = client.responses.create(
+        model=gpt_model,
+        input=prompt
+    )
+
+    return response.output_text
 
 # ---------------- Server core ----------------
 def handle_request(msg: Dict[str, Any], cache: LRUCache) -> Dict[str, Any]:
