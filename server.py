@@ -7,6 +7,8 @@ Enabling real GPT calls (optional):
 '''
 import argparse, socket, json, time, threading, math, os, ast, operator, collections
 from typing import Any, Dict
+
+from dotenv import load_dotenv
 from openai import OpenAI
 
 
@@ -83,6 +85,7 @@ def call_gpt_phony(prompt: str) -> str:
     return f"[GPT-STUB] Received a prompt of length {len(prompt)} chars."
 
 def call_gpt(prompt: str) -> str:
+    load_dotenv()
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     gpt_model = os.getenv("GPT_MODEL")
 

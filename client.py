@@ -31,7 +31,7 @@ def send_request(sock: socket.socket, payload: dict) -> dict:
 PRE_MADE_EXPR = {"1": "2+2", "2": "5+7"}
 
 
-def interactive_mode(host: str, port: int):
+def persistent_mode(host: str, port: int):
     """
     CHANGE 1: New function for interactive mode with persistent connection.
     Allows user to send multiple requests over the same TCP connection.
@@ -64,8 +64,8 @@ def interactive_mode(host: str, port: int):
                 payload = None
 
                 if choice == "calc":
-                    choose = input("Type 1 for a premade expression or 2 for your own: ").strip()
-                    if choose == "2":
+                    choose = input("Type expr for your own kind of expression or pre made for a premade expression: ").strip()
+                    if choose == "expr":
                         expr = input("Enter an expression of your choise: ")
                         if not expr:
                             print("Empty expression, skipping...")
@@ -75,7 +75,7 @@ def interactive_mode(host: str, port: int):
                             "data": {"expr": expr},
                             "options": {"cache": True}
                         }
-                    elif choose == "1":
+                    elif choose == "pre made":
                         print("choose from a library of premade expressions:")
                         print(PRE_MADE_EXPR)
                         pre_made_expr = str(input("enter your choise: "))
@@ -173,9 +173,9 @@ def main():
 
     # CHANGE 6: Add --interactive flag for persistent connection mode
     ap.add_argument(
-        "--interactive", "-i",
+        "--p", "--persistent",
         action="store_true",
-        help="Interactive mode: send multiple requests on the same connection"
+        help="Persistent mode: send multiple requests on the same connection"
     )
 
     # Legacy single-request arguments
@@ -187,9 +187,9 @@ def main():
     args = ap.parse_args()
 
     # CHANGE 7: Choose between interactive and single-request mode
-    if args.interactive:
+    if args.p:
         # New persistent connection mode
-        interactive_mode(args.host, args.port)
+        persistent_mode(args.host, args.port)
     else:
         # Legacy single-request mode (for backward compatibility)
         if not args.mode:
