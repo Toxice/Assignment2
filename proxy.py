@@ -4,6 +4,7 @@ import socket
 import threading
 import json
 import collections
+import copy
 import time
 from typing import Optional, Dict, Any, Tuple
 
@@ -120,7 +121,12 @@ def handle_client(client_sock: socket.socket, server_host: str, server_port: int
                     # cached holds the full response object
                     print(f"[proxy] cache HIT for client {client_addr}, mode={req.get('mode')}")
                     try:
-                        send_line(client_sock, cached)
+                        #send_line(client_sock, cached)
+                        cached_copy = copy.deepcopy(cached)
+                        meta = cached_copy.setdefault("meta", {})
+                        meta["proxy_from_cache"] = True
+
+                        send_line(client_sock, cached_copy)
                     except Exception:
                         # client may have disconnected
                         break

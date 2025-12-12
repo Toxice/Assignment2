@@ -77,10 +77,10 @@ def safe_eval_expr(expr: str) -> float:
 
 
 # ---------------- GPT Call (stub by default) ----------------
-   """
+"""
     Stub for GPT call – returns a placeholder string.
     Replace this with a real OpenAI call if desired.
-    """
+"""
 def call_gpt_phony(prompt: str) -> str:
 
     return f"[GPT-STUB] Received a prompt of length {len(prompt)} chars."

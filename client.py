@@ -38,13 +38,8 @@ calc - for calculations
 gpt - for sending a prompt to ChatGPT over the OpenAI API
 quit - closing the connection
 '''
-
-
 def persistent_mode(host: str, port: int):
-    """
-    CHANGE 1: New function for interactive mode with persistent connection.
-    Allows user to send multiple requests over the same TCP connection.
-    """
+
     print(f"Connecting to {host}:{port}...")
 
     try:
